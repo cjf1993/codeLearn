@@ -1,0 +1,90 @@
+ 1.@Target 
+ 　　它是被定义在一个注解类的前面，用来说明该注解可以被声明在哪些元素前。(默认可以放在任何元素之前)
+ 　　它有以下参数： 
+　　　　ElementType.TYPE：说明该注解只能被声明在一个类、接口、枚举前。 
+　　　　ElementType.FIELD：说明该注解只能被声明在一个类的字段前。
+　　　　ElementType.METHOD：说明该注解只能被声明在一个类的方法前。
+　　　　ElementType.PARAMETER：说明该注解只能被声明在一个方法参数前。 
+　　　　ElementType.CONSTRUCTOR：说明该注解只能声明在一个类的构造方法前。
+　　　　ElementType.LOCAL_VARIABLE：说明该注解只能声明在一个局部变量前。
+　　　　ElementType.ANNOTATION_TYPE：说明该注解只能声明在一个注解类型前。
+　　　　ElementType.PACKAGE：说明该注解只能声明在一个包名前。
+   ---------------------------------------------------------------
+    @target 表示这个注解类型适用的上下文，看看枚举类型ElementType的值，以后看注解可以使用在哪些地方，就可以里面的值。
+    -----------------------------------------------------------
+    public enum ElementType {
+              TYPE,                             //字段
+              FIELD,                           //字段声明
+              METHOD,                         //方法声明
+              PARAMETER,                  //参数声明
+              CONSTRUCTOR,             //构造函数声明
+              LOCAL_VARIABLE,          //本地变量声明
+              ANNOTATION_TYPE,     //注解类型声明
+              PACKAGE,                        //包声明 
+              TYPE_PARAMETER,       //类型参数声明
+              TYPE_USE;                      //类型使用
+          private ElementType() {
+                }
+}
+--------------------------------------------------------------
+2.@Retention 
+ 　　它是被定义在一个注解类的前面，用来说明该注解的生命周期。
+ 　　它有以下参数： 
+ 　　　　 RetentionPolicy.SOURCE：指定注解只保留在源文件当中。
+ 　　　　 RetentionPolicy.CLASS：指定注解只保留在class文件中。(缺省)
+  　　　　RetentionPolicy.RUNTIME：指定注解可以保留在程序运行期间。
+      
+----------------------------------------------------------------------------------
+     @Rentation 表示这个注解在什么时候存在，值如下，在说明一下，
+     SOURCE值就是编译时候存在上面这个注解就用到，也用于lombok工作原理；
+     CLASS存在的时间就是在编译之后，以及运行之前Dev这段时间；
+     RUNTIME值表示这个注解会存在jvm里面，即可用反射。
+     
+     public enum RetentionPolicy {
+   SOURCE,         //在源文件中
+   CLASS,         //在class文件存在
+   RUNTIME;      //运行时候存在
+
+   private RetentionPolicy() {
+   }
+}
+public enum RetentionPolicy {
+   SOURCE,         //在源文件中
+   CLASS,         //在class文件存在
+   RUNTIME;      //运行时候存在
+
+   private RetentionPolicy() {
+   }
+}
+----------------------------------------------------------------------------------
+2
+3. @Inherited        表明该注解将会被子类继承。
+4. @Documented        表明在生成JavaDoc文档时，该注解也会出现在javaDoc文档中。
+----------------------------------------------------------------------------------
+5. @Repeatable 这个声明这个注解修饰的类型注解是可以重复的。
+  @Test(value=1)
+  @Test(value=2)
+  private int num;
+  
+  Java8前如果是想实现类似的功能，我们需要在定义@FilterPath注解时定义一个数组元素接收多个值如下
+
+  @Target(ElementType.TYPE)
+  @Retention(RetentionPolicy.RUNTIME)
+   public @interface FilterPath {
+     String [] value();
+  }
+  @FilterPath({"/update","/add"})
+  public class A { }
+
+----------------------------------------------------------------------------------
+
+eg：Java内置注解 @Override
+
+     @Target({ElementType.METHOD})
+     @Retention(RetentionPolicy.SOURCE)
+         public @interface Override {
+     }
+     
+    
+
+
